@@ -1,0 +1,866 @@
+1.ARRAY OPERATIONS
+
+#include<stdio.h>
+#include<conio.h>
+
+void main()
+{
+    int a[20], n, i, pos, val, ch;
+
+    clrscr();
+
+    printf(" Enter number of elements:");
+    scanf("%d",&n);
+
+    printf(" Enter elements: \n");
+    for(i=0;i<n;i++)
+        scanf("%d",&a[i]);
+
+    do
+    {
+        printf("\n1. Display Array");
+        printf("\n2. Insert Element");
+        printf("\n3. Delete Element");
+        printf("\n4. Exit");
+        printf("\n Enter your choice:");
+        scanf("%d",&ch);
+
+        switch(ch)
+        {
+            case 1:
+                printf("\n Array Elements:\n");
+                for(i=0;i<n;i++)
+                    printf("%d ", a[i]);
+                break;
+
+            case 2:
+                printf("\n Enter Position:");
+                scanf("%d",&pos);
+                printf("\n Enter value:");
+                scanf("%d",&val);
+
+                for(i=n;i>pos;i--)
+                    a[i]=a[i-1];
+
+                a[pos]=val;
+                n++;
+
+                printf("\n After Insertion:\n");
+                for(i=0;i<n;i++)
+                    printf("%d ", a[i]);
+                break;
+
+            case 3:
+                printf("\n Enter delete position:");
+                scanf("%d",&pos);
+
+                for(i=pos;i<n-1;i++)
+                    a[i]=a[i+1];
+
+                n--;
+                printf("\n After Deletion:\n");
+                for(i=0;i<n;i++)
+                    printf("%d ", a[i]);
+                break;
+
+            case 4:
+                printf("\n Exit");
+                break;
+
+            default:
+                printf("\n Invalid choice");
+        }
+    }while(ch!=4);
+
+    getch();
+}
+
+
+2.STACK OPERATIONS
+
+#include <stdio.h>
+#include <conio.h>
+
+int main()
+{
+    int stack[5];
+    int top = -1;
+    int choice, item, i;
+
+    do
+    {
+        printf("\n\n STACK OPERATIONS \n");
+        printf(" 1.push\n");
+        printf(" 2.pop\n");
+        printf(" 3.view\n");
+        printf(" 4.quit\n");
+
+        printf("Enter your choice:");
+        scanf("%d", &choice);
+
+        switch(choice)
+        {
+            case 1:
+                if(top==4)
+                {
+                    printf("stack overflow\n");
+                }
+                else
+                {
+                    printf("Enter stack element:");
+                    scanf("%d", &item);
+                    top = top+1;
+                    stack[top] = item;
+                    printf("Inserted successfully\n");
+                }
+                break;
+
+            case 2:
+                if(top==-1)
+                {
+                    printf("Stack underflow\n");
+                }
+                else
+                {
+                    printf("Deleted element: %d\n", stack[top]);
+                    top = top-1;
+                }
+                break;
+
+            case 3:
+                if(top==-1)
+                {
+                    printf(" Stack is empty\n");
+                }
+                else
+                {
+                    printf("stack elements are : \n");
+                    for(i=top; i>=0; i--)
+                    {
+                        printf("%d\n", stack[i]);
+                    }
+                }
+                break;
+
+            case 4:
+                printf(" Program Ended\n");
+                break;
+
+            default:
+                printf("Invalid choice\n");
+        }
+    }while(choice!=4);
+
+    getch();
+    return 0;
+}
+
+
+
+3.QUEUE OPERATIONS
+
+#include <stdio.h>
+#include <conio.h>
+
+int main()
+{
+    int queue[5];
+    int front = -1, rear = -1;
+    int choice, item, i;
+
+    do
+    {
+        printf("\n\n QUEUE OPERATIONS \n");
+        printf("1. Insert\n");
+        printf("2. Delete\n");
+        printf("3. view\n");
+        printf("4. Quit\n");
+
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch(choice)
+        {
+            case 1:
+                if(rear==4)
+                {
+                    printf("queue overflow\n");
+                }
+                else
+                {
+                    printf("Enter queue element: ");
+                    scanf("%d", &item);
+                    if(front==-1)
+                    {
+                        front = 0;
+                    }
+                    rear = rear + 1;
+                    queue[rear] = item;
+                    printf("Inserted successfully\n");
+                }
+                break;
+
+            case 2:
+                if(front==-1 || front>rear)
+                {
+                    printf("queue underflow\n");
+                }
+                else
+                {
+                    printf("Deleted element = %d\n", queue[front]);
+                    front = front + 1;
+                }
+                break;
+
+            case 3:
+                if(front==-1 || front>rear)
+                {
+                    printf("queue is empty\n");
+                }
+                else
+                {
+                    printf("queue elements are !\n");
+                    for(i=front; i<=rear; i++)
+                    {
+                        printf("%d ", queue[i]);
+                    }
+                    printf("\n");
+                }
+                break;
+
+            case 4:
+                printf("Program Ended\n");
+                break;
+
+            default:
+                printf("Invalid choice\n");
+        }
+    }while(choice!=4);
+
+    getch();
+    return 0;
+}
+
+
+
+4.INFIX TO POSTFIX EXPRESSION
+
+#include<stdio.h>
+#include<ctype.h>
+#include<conio.h>
+
+int main()
+{
+    char infix[50], postfix[50], stack[50];
+    int top = -1;
+    int i=0, j=0;
+
+    printf("Enter infix expression: ");
+    scanf("%s", infix);
+
+    while(infix[i] != '\0')
+    {
+        char ch = infix[i];
+        if(isalnum(ch))
+        {
+            postfix[j++] = ch;
+        }
+        else if(ch == '(')
+        {
+            stack[++top] = ch;
+        }
+        else if(ch == ')')
+        {
+            while(top!=-1 && stack[top]!='(')
+            {
+                postfix[j++] = stack[top--];
+            }
+            top--;
+        }
+        else
+        {
+            while(top!=-1 && stack[top]!='(' &&
+                 ((ch=='*' || ch=='/') && (stack[top]=='+' || stack[top]=='-')))
+            {
+                postfix[j++] = stack[top--];
+            }
+            stack[++top] = ch;
+        }
+        i++;
+    }
+
+    while(top!=-1)
+    {
+        postfix[j++] = stack[top--];
+    }
+    postfix[j] = '\0';
+
+    printf("postfix Expression: %s\n", postfix);
+    getch();
+    return 0;
+}
+
+
+
+5.POSTFIX EXPRESSION
+
+#include<stdio.h>
+#include<ctype.h>
+#include<conio.h>
+
+int main()
+{
+    int stack[50];
+    int top = -1;
+
+    char postfix[50];
+    int i, op1, op2, result;
+
+    printf("Enter postfix expression:");
+    scanf("%s", postfix);
+
+    for(i=0; postfix[i]!='\0'; i++)
+    {
+        char ch = postfix[i];
+        if(isdigit(ch))
+        {
+            stack[++top] = ch - '0';
+        }
+        else
+        {
+            op2 = stack[top--];
+            op1 = stack[top--];
+
+            switch(ch)
+            {
+                case '+':
+                    result = op1 + op2;
+                    break;
+                case '-':
+                    result = op1 - op2;
+                    break;
+                case '*':
+                    result = op1 * op2;
+                    break;
+                case '/':
+                    result = op1 / op2;
+                    break;
+            }
+            stack[++top] = result;
+        }
+    }
+    printf("Result = %d\n", stack[top]);
+    getch();
+    return 0;
+}
+
+
+
+7.SINGLY LINKED LIST
+
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node{
+    int data; struct node *link;
+};
+struct node *head = NULL;
+
+void insert_at_front(int value){
+    struct node n=(struct node)malloc(sizeof(struct node));
+    n->data=value; n->link=head; head=n;
+}
+
+void insert_at_end(int value){
+    struct node n=(struct node)malloc(sizeof(struct node));
+    n->data=value; n->link=NULL;
+    if(head==NULL) head=n;
+    else{
+        struct node *t=head;
+        while(t->link!=NULL) t=t->link;
+        t->link=n;
+    }
+}
+
+void insert_middle(int key,int value){
+    struct node n=(struct node)malloc(sizeof(struct node));
+    struct node *t=head;
+    while(t!=NULL && t->data!=key) t=t->link;
+    if(t==NULL){
+        printf("Node with value %d not found.\n",key);
+        return;
+    }
+    n->data=value; n->link=t->link; t->link=n;
+}
+
+void delete_node(int value){
+    struct node *t=head,*p=NULL;
+    if(t!=NULL && t->data==value){
+        head=t->link; free(t);
+        printf("Node with value %d deleted.\n",value);
+        return;
+    }
+    while(t!=NULL && t->data!=value){
+        p=t; t=t->link;
+    }
+    if(t==NULL){
+        printf("Node with value %d not found.\n",value);
+        return;
+    }
+    p->link=t->link; free(t);
+    printf("Node with value %d deleted.\n",value);
+}
+
+void display(){
+    struct node *t=head;
+    if(t==NULL){
+        printf("List is empty.\n");
+        return;
+    }
+    printf("Linked list: ");
+    while(t!=NULL){
+        printf("%d -> ",t->data); t=t->link;
+    }
+    printf("NULL\n");
+}
+
+void main(){
+    int choice,value,key;
+    while(1){
+        printf("\n---Singly Linked List---\n");
+        printf("\n1.Insert at beginning");
+        printf("\n2.Insert at end");
+        printf("\n3.Insert after a node");
+        printf("\n4.Delete a node");
+        printf("\n5.Display list");
+        printf("\n6.Exit");
+        printf("\n Enter your choice: ");
+        scanf("%d", &choice);
+        switch(choice){
+            case 1:
+                printf("\n Enter value to insert at beginning ");
+                scanf("%d", &value);
+                insert_at_front(value);
+                display();
+                break;
+            case 2:
+                printf("\n Enter value to insert at end ");
+                scanf("%d", &value);
+                insert_at_end(value);
+                display();
+                break;
+            case 3:
+                printf("\n Enter key after which to insert ");
+                scanf("%d", &key);
+                printf("\n Enter value to insert: ");
+                scanf("%d", &value);
+                insert_middle(key, value);
+                display();
+                break;
+            case 4:
+                printf("\n Enter value to delete ");
+                scanf("%d", &value);
+                delete_node(value);
+                display();
+                break;
+            case 5:
+                display();
+                break;
+            case 6:
+                printf("\n Exiting program\n");
+                exit(0);
+            default:
+                printf("\n Invalid choice\n");
+        }
+    }
+}
+
+
+
+8.BINARY TREE AND TRAVERSAL TECHNIQUES
+
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+
+struct Node{
+    int data;
+    struct Node* left;
+    struct Node* right;
+};
+
+struct Node* createNode(int data){
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = data;
+    newNode->left = NULL;
+    newNode->right = NULL;
+    return newNode;
+}
+
+void inorderTraversal(struct Node* root){
+    if(root!=NULL){
+        inorderTraversal(root->left);
+        printf("%d ", root->data);
+        inorderTraversal(root->right);
+    }
+}
+
+void preorderTraversal(struct Node* root){
+    if(root!=NULL){
+        printf("%d ", root->data);
+        preorderTraversal(root->left);
+        preorderTraversal(root->right);
+    }
+}
+
+void postorderTraversal(struct Node* root){
+    if(root!=NULL){
+        postorderTraversal(root->left);
+        postorderTraversal(root->right);
+        printf("%d ", root->data);
+    }
+}
+
+int main(){
+    int a,b,c,d,e;
+    struct Node* root;
+
+    printf("Enter root value  ");
+    scanf("%d",&a);
+    printf("Enter left child value  ");
+    scanf("%d",&b);
+    printf("Enter right child value  ");
+    scanf("%d",&c);
+    printf("Enter left left child value  ");
+    scanf("%d",&d);
+    printf("Enter left right child value  ");
+    scanf("%d",&e);
+
+    root = createNode(a);
+    root->left = createNode(b);
+    root->right = createNode(c);
+    root->left->left = createNode(d);
+    root->left->right = createNode(e);
+
+    printf("Inorder Traversal  ");
+    inorderTraversal(root);
+    printf("\n");
+
+    printf("Preorder Traversal  ");
+    preorderTraversal(root);
+    printf("\n");
+
+    printf("Postorder Traversal  ");
+    postorderTraversal(root);
+    printf("\n");
+
+    getch();
+    return 0;
+}
+
+
+
+9.LINEAR SERACH
+
+#include<stdio.h>
+#include<conio.h>
+
+int main(){
+    int array[100], n, i, key, found = 0;
+
+    printf("Enter number of elements in an array: ");
+    scanf("%d", &n);
+
+    printf("Enter %d elements:\n", n);
+    for(i = 0; i < n; i++) {
+        scanf("%d", &array[i]);
+    }
+
+    printf("Enter the element to search: ");
+    scanf("%d", &key);
+
+    for(i = 0; i < n;i++){
+        if(array[i] == key){
+            found = 1;
+            break;
+        }
+    }
+
+    if(found){
+        printf("Element found at position %d (index %d)\n", i + 1, i);
+    }
+
+    if(!found){
+        printf("Element not found in the array.\n");
+    }
+
+    getch();
+    return 0;
+}
+
+
+
+10.BINARY SEARCH
+
+#include<stdio.h>
+int main(){
+    int c, first, last, middle, n, search, array[100];
+
+    printf("Enter number of elements:");
+    scanf("%d", &n);
+    printf("Enter %d integers in ascending order:\n",n);
+    for(c = 0; c < n; c++)
+        scanf("%d", &array[c]);
+    printf("Enter value to find:");
+    scanf("%d", &search);
+    first = 0;
+    last = n - 1;
+    middle = (first+last)/2;
+    while(first <= last){
+        if(array[middle] < search)
+            first = middle + 1;
+        else if(array[middle] == search){
+            printf("%d found at location %d \n", search, middle+1);
+            break;
+        }
+        else
+            last = middle - 1;
+        middle = (first + last)/2;
+    }
+    if(first > last)
+        printf("Not found %d isn't present in the list.\n",search);
+    getch();
+    return 0;
+}
+
+
+
+11.INSERTION SORT
+
+#include<stdio.h>
+#include<conio.h>
+
+#define MAX 100
+
+void displayArray(int arr[],int n);
+void insertionSort(int arr[],int n);
+
+int main(){
+    int arr[MAX];
+    int n,i;
+
+    printf("====================\n");
+    printf("     INSERTION SORT\n");
+    printf("====================\n");
+
+    printf("Enter number of elements: ");
+    scanf("%d",&n);
+
+    printf("Enter %d numbers:\n",n);
+    for(i=0;i<n;i++){
+        printf("Element[%d]:",i);
+        scanf("%d",&arr[i]);
+    }
+
+    printf("\nBefore sorting:");
+    displayArray(arr,n);
+
+    insertionSort(arr,n);
+
+    printf("After sorting:");
+    displayArray(arr,n);
+
+    getch();
+    return 0;
+}
+
+void displayArray(int arr[], int n){
+    int i;
+    for(i = 0; i < n; i++)
+        printf("%d ", arr[i]);
+    printf("\n");
+}
+
+void insertionSort(int arr[], int n){
+    int i, key, j;
+    for(i = 1;i < n;i++){
+        key = arr[i];
+        j = i - 1;
+
+        while(j>=0 && arr[j]>key){
+            arr[j+1] = arr[j];
+            j--;
+	}
+	arr[j+1] = key;
+    }
+}	
+
+
+
+12.QUICK SORT
+
+#include<stdio.h>
+#define MAX 100
+
+void displayArray(int arr[], int n);
+void quickSort(int arr[], int low, int high);
+int partition(int arr[],int low,int high);
+
+int main(){
+    int arr[MAX];
+    int n, i;
+
+    printf("====================\n");
+    printf("     QUICK SORT\n");
+    printf("====================\n");
+
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    printf("Enter %d numbers:\n", n);
+    for(i = 0; i < n; i++){
+        printf("Element [%d]: ", i);
+        scanf("%d", &arr[i]);
+    }
+
+    printf("\nBefore sorting: ");
+    displayArray(arr, n);
+
+    quickSort(arr, 0, n-1);
+
+    printf("After sorting : ");
+    displayArray(arr, n);
+
+    getch();
+    return 0;
+}
+
+void displayArray(int arr[], int n){
+    int i;
+    for(i = 0; i < n; i++)
+        printf("%d ", arr[i]);
+    printf("\n");
+}
+
+void quickSort(int arr[], int low, int high){
+    int pivotIndex;
+    if(low < high){
+        pivotIndex = partition(arr, low, high);
+        quickSort(arr, low, pivotIndex - 1);
+        quickSort(arr, pivotIndex + 1, high);
+    }
+}
+
+int partition(int arr[], int low, int high){
+    int pivot = arr[high];
+    int i = low - 1;
+    int j, temp;
+
+    for( j = low; j < high; j++){
+        if(arr[j] <= pivot){
+            i++;
+            temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+        }
+    }
+
+    temp = arr[i + 1];
+    arr[i + 1] = arr[high];
+    arr[high] = temp;
+
+    return i + 1;
+}
+
+
+
+13.RADIX SORT
+
+#include<stdio.h>
+#include<conio.h>
+#define MAX 100
+
+void displayArray(int arr[], int n);
+void radixSort(int arr[], int n);
+int getMax(int arr[], int n);
+void countSortByDigit(int arr[], int n, int place);
+void copyArray(int source[], int dest[], int n);
+
+int main(){
+    int arr[MAX];
+    int n, i;
+
+    printf("====================\n");
+    printf("     RADIX SORT\n");
+    printf("====================\n");
+
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    printf("Enter %d non-negative numbers:\n", n);
+    for(i = 0; i < n; i++){
+        printf("Element [%d]: ",i);
+        scanf("%d", &arr[i]);
+    }
+
+    printf("\nBefore sorting: ");
+    displayArray(arr, n);
+
+    radixSort(arr, n);
+
+    printf("After sorting: ");
+    displayArray(arr, n);
+
+    getch();
+    return 0;
+}
+
+void displayArray(int arr[], int n){
+    int i;
+    for(i = 0; i < n; i++)
+        printf("%d ", arr[i]);
+    printf("\n");
+}
+
+void copyArray(int source[], int dest[], int n){
+    int i;
+    for (i = 0; i < n; i++)
+        dest[i] = source[i];
+}
+
+int getMax(int arr[], int n){
+    int max = arr[0];
+    int i;
+    for(i = 1; i < n; i++)
+        if(arr[i] > max)
+            max = arr[i];
+    return max;
+}
+
+void countSortByDigit(int arr[], int n, int place){
+    int output[MAX];
+    int count[10] = {0};
+    int i, digit;
+
+    for(i = 0; i < n; i++)
+        count[(arr[i] / place) % 10]++;
+
+    for(i = 1; i < 10; i++)
+        count[i]+= count[i -1];
+
+    for(i = n - 1; i >= 0; i--){
+        digit = (arr[i] / place) % 10;
+        output[count[digit] - 1] = arr[i];
+        count[digit]--;
+    }
+
+    copyArray(output, arr, n);
+}
+
+void radixSort(int arr[], int n){
+    int max = getMax(arr, n);
+    int place;
+    for(place = 1;max / place > 0; place *= 10)
+        countSortByDigit(arr, n, place);
+}
+
